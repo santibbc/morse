@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MorseBT" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/amber</item>
+        <item name="colorOnPrimary">@color/on_amber</item>
+        <item name="colorPrimaryContainer">@color/surface_high</item>
+        <item name="colorOnPrimaryContainer">@color/amber</item>
+        <item name="colorSecondaryContainer">@color/surface_high</item>
+        <item name="colorOnSecondaryContainer">@color/text</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorAccent">@color/amber</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+    </style>
+</resources>

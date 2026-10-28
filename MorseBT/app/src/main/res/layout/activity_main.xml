@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <!-- Encabezado: luz de señal, título, estado y ajustes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="6dp">
+
+        <View
+            android:id="@+id/lamp"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:alpha="0.18"
+            android:background="@drawable/lamp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.2"
+                android:text="MORSE·BT"
+                android:textColor="@color/amber"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desconectado"
+                android:textColor="@color/muted"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Ajustes"
+            android:src="@drawable/ic_tune"
+            app:tint="@color/text" />
+    </LinearLayout>
+
+    <!-- Botones de conexión -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/listenButton"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:text="Esperar conexión" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/connectButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:text="Conectar"
+            app:icon="@drawable/ic_bluetooth" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/disconnectButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Desconectar"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Panel de ajustes (oculto por defecto) -->
+    <LinearLayout
+        android:id="@+id/settingsPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/panel_bg"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/wpmLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <SeekBar
+            android:id="@+id/wpmSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/freqLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <SeekBar
+            android:id="@+id/freqSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/autoplaySwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:text="Reproducir mensajes recibidos"
+            android:textColor="@color/text" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/playOnSendSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:text="Escuchar mis mensajes al enviar"
+            android:textColor="@color/text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Consejo: para el manipulador empieza con 10–15 PPM. Ambos teléfonos deben usar la misma velocidad."
+            android:textColor="@color/muted"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Conversación -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messageList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/emptyHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:padding="32dp"
+            android:text="1. Empareja los dos teléfonos en Ajustes › Bluetooth.\n2. En uno pulsa «Esperar conexión».\n3. En el otro pulsa «Conectar» y elígelo.\n\nLuego escribe un mensaje o mantén presionado el manipulador."
+            android:textColor="@color/muted"
+            android:textSize="14sp" />
+    </FrameLayout>
+
+    <!-- Lo que el otro teclea en vivo -->
+    <TextView
+        android:id="@+id/liveRx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/live_bg"
+        android:fontFamily="monospace"
+        android:maxLines="2"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/amber"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <!-- Escribir mensaje -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/panel_bg"
+        android:orientation="vertical"
+        android:paddingStart="14dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Escribe un mensaje…"
+                android:importantForAutofill="no"
+                android:inputType="textCapCharacters|textMultiLine|textNoSuggestions"
+                android:maxLines="3"
+                android:minHeight="44dp"
+                android:textColor="@color/text"
+                android:textColorHint="@color/muted"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/playButton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Escuchar"
+                android:src="@drawable/ic_play"
+                app:tint="@color/amber" />
+
+            <ImageButton
+                android:id="@+id/sendButton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/send_bg"
+                android:contentDescription="Enviar"
+                android:padding="11dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_send"
+                app:tint="@color/on_amber" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/morsePreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:maxLines="2"
+            android:ellipsize="start"
+            android:textColor="@color/amber_dim"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Manipulador -->
+    <TextView
+        android:id="@+id/keySymbols"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:letterSpacing="0.3"
+        android:textColor="@color/amber"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/keyButton"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="monospace"
+        android:letterSpacing="0.15"
+        android:text="MANIPULADOR\nmantén presionado"
+        android:textSize="15sp"
+        app:cornerRadius="28dp" />
+</LinearLayout>

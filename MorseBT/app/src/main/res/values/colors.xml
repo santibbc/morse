@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#12100E</color>
+    <color name="surface">#1C1915</color>
+    <color name="surface_high">#2A241D</color>
+    <color name="outline">#3A3229</color>
+    <color name="amber">#FFB347</color>
+    <color name="amber_dim">#B07A2E</color>
+    <color name="on_amber">#1A1208</color>
+    <color name="text">#F2E8DC</color>
+    <color name="muted">#9C8F80</color>
+    <color name="bubble_out">#3A2A14</color>
+    <color name="bubble_in">#211D18</color>
+</resources>
